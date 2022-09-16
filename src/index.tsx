@@ -5,16 +5,23 @@ import {
   ApolloClient,
   createHttpLink,
   InMemoryCache,
-  split,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { WebSocketLink } from "@apollo/client/link/ws";
-import { getMainDefinition } from "@apollo/client/utilities";
 import { BrowserRouter } from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline";
 import "./styles/index.css";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import { AUTH_TOKEN } from "./constants";
+
+export default function MyApp() {
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      {/* The rest of your application */}
+    </React.Fragment>
+  );
+}
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000",
@@ -30,30 +37,8 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/graphql`,
-  options: {
-    reconnect: true,
-    connectionParams: {
-      authToken: localStorage.getItem(AUTH_TOKEN),
-    },
-  },
-});
-
-const link = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === "OperationDefinition" &&
-      definition.operation === "subscription"
-    );
-  },
-  wsLink,
-  authLink.concat(httpLink)
-);
-
 const client = new ApolloClient({
-  link,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
@@ -62,6 +47,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <CssBaseline />
     <BrowserRouter>
       <ApolloProvider client={client}>
         <App />
