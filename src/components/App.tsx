@@ -6,6 +6,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "./Login";
 import Search from "./Search";
 import Stores from "./Stores";
+import Main from "./Main";
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
     //   </div>
     // </div>
     <Routes>
-      <Route path="/" element={<Stores />} />
+      <Route path="/" element={<Main />} />
     </Routes>
   );
 };
