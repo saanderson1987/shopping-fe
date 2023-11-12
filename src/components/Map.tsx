@@ -11,8 +11,8 @@ const containerStyle = {
 };
 
 const center = {
-  lat: 40.7236447,
-  lng: -74.003265,
+  lat: 40.72332345541451,
+  lng: -73.99905681610107,
 };
 
 const Container = ({ children }) => (
@@ -34,29 +34,9 @@ const Map = () => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string,
   });
 
-  const [map, setMap] = React.useState<google.maps.Map | null>(null);
-
-  console.log(map);
-  console.log(map && map.data.map.center.lat());
-  console.log(map && map.data.map.center.lng());
-
-  const onLoad = React.useCallback((map: google.maps.Map) => {
-    setMap(map);
-  }, []);
-
-  const onUnmount = React.useCallback((map: google.maps.Map) => {
-    setMap(null);
-  }, []);
-
   if (isLoaded) {
     return (
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={16}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
+      <GoogleMap center={center} mapContainerStyle={containerStyle} zoom={15.5}>
         {/* Child components, such as markers, info windows, etc. */}
         <></>
       </GoogleMap>
