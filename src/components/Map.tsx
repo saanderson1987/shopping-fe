@@ -36,7 +36,14 @@ const Map = () => {
 
   if (isLoaded) {
     return (
-      <GoogleMap center={center} mapContainerStyle={containerStyle} zoom={15.5}>
+      <GoogleMap
+        center={center}
+        mapContainerStyle={containerStyle}
+        options={{
+          mapTypeControl: false,
+        }}
+        zoom={15.5}
+      >
         {/* Child components, such as markers, info windows, etc. */}
         <></>
       </GoogleMap>
