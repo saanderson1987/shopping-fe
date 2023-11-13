@@ -10,10 +10,7 @@ const containerStyle = {
   height: "100vw",
 };
 
-const center = {
-  lat: 40.72332345541451,
-  lng: -73.99905681610107,
-};
+const center = { lat: 40.72283097424528, lng: -74.00074286846672 };
 
 const Container = ({ children }) => (
   <Box
