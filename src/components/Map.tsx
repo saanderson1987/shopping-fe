@@ -41,6 +41,50 @@ const Map = () => {
         mapContainerStyle={containerStyle}
         options={{
           mapTypeControl: false,
+          styles: [
+            {
+              featureType: "administrative",
+              elementType: "geometry",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "administrative",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "poi",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "road",
+              elementType: "labels.icon",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+            {
+              featureType: "transit",
+              stylers: [
+                {
+                  visibility: "off",
+                },
+              ],
+            },
+          ],
         }}
         zoom={15.5}
       >
