@@ -12,74 +12,80 @@ const containerStyle = {
   height: "100vw",
 };
 
-const markers = [{ lat: 40.7240352, lng: -74.0003392 }];
+const markers = [{ lat: 40.7240352, lng: -74.0003392, title: "test" }];
 
 const Map = () => {
   const ref = useRef();
 
   useEffect(() => {
-    // @ts-ignore
-    const map = new window.google.maps.Map(ref.current, {
-      center: { lat: 40.72283097424528, lng: -74.00074286846672 },
-      mapTypeControl: false,
-      styles: [
-        {
-          featureType: "administrative",
-          elementType: "geometry",
-          stylers: [
-            {
-              visibility: "off",
-            },
-          ],
-        },
-        {
-          featureType: "administrative",
-          stylers: [
-            {
-              visibility: "off",
-            },
-          ],
-        },
-        {
-          featureType: "poi",
-          stylers: [
-            {
-              visibility: "off",
-            },
-          ],
-        },
-        {
-          featureType: "road",
-          elementType: "labels.icon",
-          stylers: [
-            {
-              visibility: "off",
-            },
-          ],
-        },
-        {
-          featureType: "transit",
-          stylers: [
-            {
-              visibility: "off",
-            },
-          ],
-        },
-      ],
-      zoom: 15.5,
-    });
+    const map = new window.google.maps.Map(
+      ref.current as unknown as HTMLElement,
+      {
+        center: { lat: 40.72283097424528, lng: -74.00074286846672 },
+        mapTypeControl: false,
+        styles: [
+          {
+            featureType: "administrative",
+            elementType: "geometry",
+            stylers: [
+              {
+                visibility: "off",
+              },
+            ],
+          },
+          {
+            featureType: "administrative",
+            stylers: [
+              {
+                visibility: "off",
+              },
+            ],
+          },
+          {
+            featureType: "poi",
+            stylers: [
+              {
+                visibility: "off",
+              },
+            ],
+          },
+          {
+            featureType: "road",
+            elementType: "labels.icon",
+            stylers: [
+              {
+                visibility: "off",
+              },
+            ],
+          },
+          {
+            featureType: "transit",
+            stylers: [
+              {
+                visibility: "off",
+              },
+            ],
+          },
+        ],
+        zoom: 15.5,
+      }
+    );
 
     const infoWindow = new window.google.maps.InfoWindow();
 
-    window.google.maps.importLibrary("marker").then((MarkerLib) => {
+    (
+      window.google.maps.importLibrary(
+        "marker"
+      ) as Promise<google.maps.MarkerLibrary>
+    ).then((MarkerLib) => {
       console.log(MarkerLib);
-      // @ts-ignore
+      console.log(window.google.maps);
       const { Marker } = MarkerLib;
-      markers.forEach(({ lat, lng }) => {
+      markers.forEach(({ lat, lng, title }, i) => {
         const marker = new Marker({
           position: { lat, lng },
           map,
-          // title: `${i + 1}. ${title}`,
+          title: `${i + 1}. ${title}`,
           // content: pin.element,
         });
 
@@ -88,8 +94,8 @@ const Map = () => {
         marker.addListener("click", ({ domEvent, latLng }) => {
           const { target } = domEvent;
           infoWindow.close();
-          infoWindow.setContent(marker.title);
-          infoWindow.open(marker.map, marker);
+          infoWindow.setContent(marker.getTitle());
+          infoWindow.open(marker.getMap(), marker);
         });
       });
     });
