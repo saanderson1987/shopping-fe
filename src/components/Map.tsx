@@ -15,7 +15,7 @@ const containerStyle = {
 const markers = [{ lat: 40.7240352, lng: -74.0003392, title: "test" }];
 
 const Map = () => {
-  const ref = useRef();
+  const ref = useRef(null);
 
   useEffect(() => {
     const map = new window.google.maps.Map(
@@ -90,9 +90,7 @@ const Map = () => {
         });
 
         // Add a click listener for each marker, and set up the info window.
-        // @ts-ignore
-        marker.addListener("click", ({ domEvent, latLng }) => {
-          const { target } = domEvent;
+        marker.addListener("click", () => {
           infoWindow.close();
           infoWindow.setContent(marker.getTitle());
           infoWindow.open(marker.getMap(), marker);
@@ -101,7 +99,6 @@ const Map = () => {
     });
   }, []);
 
-  // @ts-ignore
   return <div id="map" ref={ref} style={{ height: "100%", width: "100%" }} />;
 };
 
