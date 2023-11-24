@@ -1,16 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  Wrapper as MapWrapper,
-  Status as MapStatus,
-} from "@googlemaps/react-wrapper";
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import Typography from "@mui/material/Typography";
-
-const containerStyle = {
-  width: "100vw",
-  height: "100vw",
-};
+import React, { useEffect, useRef } from "react";
+import MapWrapper from "./MapWrapper";
 
 const markers = [{ lat: 40.7240352, lng: -74.0003392, title: "test" }];
 
@@ -78,8 +67,6 @@ const Map = () => {
         "marker"
       ) as Promise<google.maps.MarkerLibrary>
     ).then((MarkerLib) => {
-      console.log(MarkerLib);
-      console.log(window.google.maps);
       const { Marker } = MarkerLib;
       markers.forEach(({ lat, lng, title }, i) => {
         const marker = new Marker({
@@ -102,36 +89,10 @@ const Map = () => {
   return <div id="map" ref={ref} style={{ height: "100%", width: "100%" }} />;
 };
 
-const Container = ({ children }: { children: React.ReactNode }) => (
-  <Box
-    sx={{
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "center",
-      ...containerStyle,
-    }}
-  >
-    {children}
-  </Box>
-);
-
 const MapWrapped = () => (
-  <Container>
-    <MapWrapper
-      apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string}
-      render={(status) => {
-        console.log(status);
-        switch (status) {
-          case MapStatus.LOADING:
-            return <CircularProgress />;
-          case MapStatus.FAILURE:
-            return <Typography>Error loading map.</Typography>;
-          case MapStatus.SUCCESS:
-            return <Map />;
-        }
-      }}
-    />
-  </Container>
+  <MapWrapper>
+    <Map />
+  </MapWrapper>
 );
 
 export default MapWrapped;
