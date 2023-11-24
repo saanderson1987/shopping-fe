@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import MapWrapper from "./MapWrapper";
+import MAP_OPTIONS from "./map-options";
 
 const markers = [{ lat: 40.7240352, lng: -74.0003392, title: "test" }];
 
@@ -9,55 +10,7 @@ const Map = () => {
   useEffect(() => {
     const map = new window.google.maps.Map(
       ref.current as unknown as HTMLElement,
-      {
-        center: { lat: 40.72283097424528, lng: -74.00074286846672 },
-        mapTypeControl: false,
-        styles: [
-          {
-            featureType: "administrative",
-            elementType: "geometry",
-            stylers: [
-              {
-                visibility: "off",
-              },
-            ],
-          },
-          {
-            featureType: "administrative",
-            stylers: [
-              {
-                visibility: "off",
-              },
-            ],
-          },
-          {
-            featureType: "poi",
-            stylers: [
-              {
-                visibility: "off",
-              },
-            ],
-          },
-          {
-            featureType: "road",
-            elementType: "labels.icon",
-            stylers: [
-              {
-                visibility: "off",
-              },
-            ],
-          },
-          {
-            featureType: "transit",
-            stylers: [
-              {
-                visibility: "off",
-              },
-            ],
-          },
-        ],
-        zoom: 15.5,
-      }
+      MAP_OPTIONS
     );
 
     const infoWindow = new window.google.maps.InfoWindow();
