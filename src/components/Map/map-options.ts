@@ -45,7 +45,9 @@ const MAP_STYLES = [
 
 const MAP_OPTIONS = {
   center: { lat: 40.72283097424528, lng: -74.00074286846672 },
+  fullscreenControl: false,
   mapTypeControl: false,
+  streetViewControl: false,
   styles: MAP_STYLES,
   zoom: 15.5,
 };
