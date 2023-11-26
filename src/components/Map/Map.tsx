@@ -11,7 +11,6 @@ const Map = ({ markers }: { markers: Marker[] }) => {
       ref.current as unknown as HTMLElement,
       MAP_OPTIONS
     );
-    const infoWindow = new window.google.maps.InfoWindow();
 
     (
       window.google.maps.importLibrary(
@@ -19,7 +18,6 @@ const Map = ({ markers }: { markers: Marker[] }) => {
       ) as Promise<google.maps.MarkerLibrary>
     ).then((MarkerLibrary) => {
       createMarkers({
-        infoWindow,
         map,
         MarkerLibrary,
         markers,
