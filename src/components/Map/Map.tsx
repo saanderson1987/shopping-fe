@@ -3,11 +3,15 @@ import MapWrapper from "./MapWrapper";
 import MAP_OPTIONS from "./map-options";
 import createMarkers, { Marker, OnClickMarker } from "./create-markers";
 
+type OnClickMap = () => void;
+
 const Map = ({
   markers,
+  onClickMap,
   onClickMarker,
 }: {
   markers: Marker[];
+  onClickMap: OnClickMap;
   onClickMarker: OnClickMarker;
 }) => {
   const ref = useRef(null);
@@ -18,6 +22,9 @@ const Map = ({
       MAP_OPTIONS
     );
 
+    map.addListener("click", () => {
+      onClickMap();
+    });
     (
       window.google.maps.importLibrary(
         "marker"
@@ -30,7 +37,7 @@ const Map = ({
         onClickMarker,
       });
     });
-  }, [markers]);
+  }, [markers, onClickMap, onClickMarker]);
 
   return (
     <div
@@ -47,12 +54,18 @@ const Map = ({
 const MapWrapped = ({
   markers,
   onClickMarker,
+  onClickMap,
 }: {
   markers: Marker[];
+  onClickMap: OnClickMap;
   onClickMarker: OnClickMarker;
 }) => (
   <MapWrapper>
-    <Map markers={markers} onClickMarker={onClickMarker} />
+    <Map
+      markers={markers}
+      onClickMap={onClickMap}
+      onClickMarker={onClickMarker}
+    />
   </MapWrapper>
 );
 

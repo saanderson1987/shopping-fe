@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Map from "./Map/Map";
+import { Marker } from "./Map/create-markers";
 import Bottom from "./Bottom";
 
 const markers = [
@@ -9,11 +10,25 @@ const markers = [
 const Main = () => {
   const [idStoreOpen, setIdStoreOpen] = useState<string | null>(null);
 
+  const onClickMap = useCallback(() => {
+    if (idStoreOpen) {
+      setIdStoreOpen(null);
+    }
+  }, [idStoreOpen, setIdStoreOpen]);
+
+  const onClickMarker = useCallback(
+    ({ marker }: { marker: Marker }) => {
+      setIdStoreOpen(marker.storeId);
+    },
+    [setIdStoreOpen]
+  );
+
   return (
     <>
       <Map
         markers={markers}
-        onClickMarker={({ marker }) => setIdStoreOpen(marker.storeId)}
+        onClickMap={onClickMap}
+        onClickMarker={onClickMarker}
       />
       <Bottom idStoreOpen={idStoreOpen} />
     </>
