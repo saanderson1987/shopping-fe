@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MapWrapper from "./MapWrapper";
 import MAP_OPTIONS from "./map-options";
 import createMarkers, { Marker, OnClickMarker } from "./create-markers";
@@ -14,30 +14,44 @@ const Map = ({
   onClickMap: OnClickMap;
   onClickMarker: OnClickMarker;
 }) => {
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [MarkerLibrary, setMarkerLibrary] =
+    useState<google.maps.MarkerLibrary | null>(null);
   const ref = useRef(null);
 
   useEffect(() => {
-    const map = new window.google.maps.Map(
-      ref.current as unknown as HTMLElement,
-      MAP_OPTIONS
-    );
-
-    map.addListener("click", () => {
-      onClickMap();
-    });
     (
       window.google.maps.importLibrary(
         "marker"
       ) as Promise<google.maps.MarkerLibrary>
-    ).then((MarkerLibrary) => {
+    ).then(setMarkerLibrary);
+
+    setMap(
+      new window.google.maps.Map(
+        ref.current as unknown as HTMLElement,
+        MAP_OPTIONS
+      )
+    );
+  }, []);
+
+  useEffect(() => {
+    if (map) {
+      map.addListener("click", () => {
+        onClickMap();
+      });
+    }
+  }, [onClickMap, map]);
+
+  useEffect(() => {
+    if (MarkerLibrary && map) {
       createMarkers({
         map,
         MarkerLibrary,
         markers,
         onClickMarker,
       });
-    });
-  }, [markers, onClickMap, onClickMarker]);
+    }
+  }, [map, MarkerLibrary, markers, onClickMarker]);
 
   return (
     <div
