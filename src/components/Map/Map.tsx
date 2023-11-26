@@ -1,9 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import MapWrapper from "./MapWrapper";
 import MAP_OPTIONS from "./map-options";
-import createMarkers, { Marker } from "./create-markers";
+import createMarkers, { Marker, OnClickMarker } from "./create-markers";
 
-const Map = ({ markers }: { markers: Marker[] }) => {
+const Map = ({
+  markers,
+  onClickMarker,
+}: {
+  markers: Marker[];
+  onClickMarker: OnClickMarker;
+}) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -21,6 +27,7 @@ const Map = ({ markers }: { markers: Marker[] }) => {
         map,
         MarkerLibrary,
         markers,
+        onClickMarker,
       });
     });
   }, [markers]);
@@ -37,9 +44,15 @@ const Map = ({ markers }: { markers: Marker[] }) => {
   );
 };
 
-const MapWrapped = ({ markers }: { markers: Marker[] }) => (
+const MapWrapped = ({
+  markers,
+  onClickMarker,
+}: {
+  markers: Marker[];
+  onClickMarker: OnClickMarker;
+}) => (
   <MapWrapper>
-    <Map markers={markers} />
+    <Map markers={markers} onClickMarker={onClickMarker} />
   </MapWrapper>
 );
 
