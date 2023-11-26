@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Map from "./Map/Map";
-import Stores from "./Stores";
+import Bottom from "./Bottom";
 
 const markers = [
   { lat: 40.7240352, lng: -74.0003392, name: "Etro", storeId: "123" },
@@ -15,7 +15,7 @@ const Main = () => {
         markers={markers}
         onClickMarker={({ marker }) => setIdStoreOpen(marker.storeId)}
       />
-      <Stores />
+      <Bottom idStoreOpen={idStoreOpen} />
     </>
   );
 };
